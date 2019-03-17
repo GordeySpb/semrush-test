@@ -12,3 +12,33 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.App {
+  width: 800px;
+  margin: 100px auto;
+}
+
+.inputs-group {
+  width: 100%;
+  display: flex;
+  margin-bottom: 50px;
+}
+
+.wrapp-input {
+  width: 200px;
+  margin-right: 30px;
+}
+
+.btns-group {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.wrapp-btn {
+  margin-right: 15px;
+}
+
+.condition {
+  display: flex;
+  margin-bottom: 20px;
+}
