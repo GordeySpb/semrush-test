@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { Button } from 'reactstrap';
 import Inputs from './Inputs';
+import { EQUAL_OPERATION, CONTAINING_OPERATION, TYPE } from './constants';
 import './App.css';
 
+
 class App extends Component {
-  static OPERATIONS = {
-    text: ['Containing', 'Exactly matching', 'Begins with', 'Ends with'],
-    numbers: ['Equal', 'Greater than', 'Less than'],
-  };
+  static DEFAULT_NUMBER_OPERATION = EQUAL_OPERATION;
+
+  static DEFAULT_TEXT_OPERATION = CONTAINING_OPERATION;
 
   constructor(props) {
     super(props);
@@ -15,8 +16,8 @@ class App extends Component {
     this.state = {
       filters: [
         {
-          type: 'Text field',
-          operation: 'Containing',
+          type: TYPE.TEXT,
+          operation: App.DEFAULT_TEXT_OPERATION,
           value: '',
           id: +Date.now(),
         },
@@ -24,41 +25,44 @@ class App extends Component {
     };
   }
 
-  setType = ({ target: { value, id: targetId } }) => {
-    const { text, numbers } = App.OPERATIONS;
+  setType = (value, id) => {
     const { filters } = this.state;
 
     const newFilters = filters.map((item) => {
-      if (item.id === +targetId) {
+      if (item.id === +id) {
         return {
           ...item,
           type: value,
-          operation: value === 'Text field' ? text[0] : numbers[0],
+          operation: value === TYPE.TEXT ? App.DEFAULT_TEXT_OPERATION : App.DEFAULT_NUMBER_OPERATION,
         };
       }
+
+      return item;
     });
 
     this.setState({ filters: newFilters }, () => console.log(this.state));
   };
 
-  setValue = ({ target: { value, id: targetId } }) => {
+  setValue = (value, id) => {
     const { filters } = this.state;
     const newFilters = filters.map((item) => {
-      if (item.id === +targetId) {
+      if (item.id === +id) {
         return {
           ...item,
           value,
         };
       }
+
+      return item;
     });
 
-    this.setState({ filters: newFilters });
+    this.setState({ filters: newFilters }, () => console.log(this.state));
   };
 
-  setOperation = ({ target: { value, id: targetId } }) => {
+  setOperation = (value, id) => {
     const { filters } = this.state;
     const newFilters = filters.map((item) => {
-      if (item.id === +targetId) {
+      if (item.id === +id) {
         return {
           ...item,
           operation: value,
@@ -70,33 +74,18 @@ class App extends Component {
   };
 
   addFilter = () => {
-    const {filters} = this.state;
-    const { text } = App.OPERATIONS;
+    const { filters } = this.state;
     const newFilter = {
-      type: 'Text field',
-      operation: text[0],
+      type: TYPE.TEXT,
+      operation: App.DEFAULT_TEXT_OPERATION,
       value: '',
       id: +Date.now(),
     };
 
     const newFilters = [...filters, newFilter];
 
-    this.setState({filters: newFilters});
+    this.setState({ filters: newFilters });
   }
-
-  // clearFilter = () => {
-  //   const {filters} = this.state;
-  //   const { text } = App.OPERATIONS;
-  //   const newFilter = filters.map(item => {
-  //     return {
-  //       type: 'Text field',
-  //       operation: text[0],
-  //       value: '',
-  //     }
-  //   })
-
-  //   this.setState({filters: newFilter})
-  // }
 
   render() {
     const { filters } = this.state;
@@ -109,9 +98,15 @@ class App extends Component {
             type={type}
             operation={operation}
             value={value}
-            onTypeChange={this.setType}
-            onValueChange={this.setValue}
-            onOperationChange={this.setOperation}
+            onTypeChange={({ target: { value } }) => {
+              this.setType(value, id);
+            }}
+            onValueChange={({ target: { value } }) => {
+              this.setValue(value, id);
+            }}
+            onOperationChange={({ target: { value } }) => {
+              this.setOperation(value, id);
+            }}
           />
         ))}
         <div className="condition">
