@@ -10,7 +10,6 @@ const UPDATE_VALUE = 'UPDATE_VALUE';
 const UPDATE_TYPE = 'UPDATE_TYPE';
 const UPDATE_OPERATION = 'UPDATE_OPERATION';
 const DELETE_FILTER = 'DELETE_FILTER';
-const GET_DATA = 'GET_DATA';
 const CLEAR_FILTERS = 'CLEAR_FILTERS';
 
 const getNewFilter = () => ({
@@ -134,20 +133,14 @@ export default function useFilters() {
     });
   };
 
-  const getData = () => {
-    dispatch({
-      type: GET_DATA,
-    });
-  };
-
   const clearFilters = () => {
     dispatch({
       type: CLEAR_FILTERS,
     });
   };
 
-  const getPublickData = () => {
-    console.log(getFiltersByCategory(filters));
+  const getPublicData = () => {
+    return getFiltersByCategory(filters);
   };
 
   return {
@@ -157,8 +150,7 @@ export default function useFilters() {
     updateType,
     updateOperation,
     deleteFilter,
-    getData,
     clearFilters,
-    getPublickData,
+    getPublicData,
   };
 }
