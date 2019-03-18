@@ -41,6 +41,7 @@ const Filters = () => {
         ))}
       </div>
       <Controls
+        count={filters.length}
         addFilter={addNewFilter}
         getData={() => console.log(getPublicData())}
         clearFilters={clearFilters}

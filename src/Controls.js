@@ -6,7 +6,7 @@ import addIcon from './icons/add.svg';
 const Controls = ({ addFilter, getData, clearFilters, count }) => (
   <>
     <div className="condition">
-      {count > 10 ? null : (
+      {count >= 10 ? null : (
         <>
           <img src={addIcon} alt="add" className="condition__add" />
           <Button color="link" onClick={addFilter}>
