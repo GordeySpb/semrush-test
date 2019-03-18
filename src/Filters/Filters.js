@@ -89,7 +89,6 @@ class Filters extends Component {
 
   addFilter = () => {
     const { filters } = this.state;
-    if (filters.length === 10) return;
     const newFilter = {
       type: TYPE.TEXT,
       operation: Filters.DEFAULT_TEXT_OPERATION,
@@ -168,6 +167,7 @@ class Filters extends Component {
           addFilter={this.addFilter}
           getData={this.getData}
           clearFilters={this.clearFilters}
+          count={filters.length}
         />
       </>
     );

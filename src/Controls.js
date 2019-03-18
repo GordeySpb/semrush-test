@@ -3,13 +3,17 @@ import PropTypes from 'prop-types';
 import { Button } from 'reactstrap';
 import addIcon from './icons/add.svg';
 
-const Controls = ({ addFilter, getData, clearFilters }) => (
+const Controls = ({ addFilter, getData, clearFilters, count }) => (
   <>
     <div className="condition">
-      <img src={addIcon} alt="add" className="condition__add" />
-      <Button color="link" onClick={addFilter}>
-        Add condition
-      </Button>
+      {count > 10 ? null : (
+        <>
+          <img src={addIcon} alt="add" className="condition__add" />
+          <Button color="link" onClick={addFilter}>
+            Add condition
+          </Button>
+        </>
+      )}
     </div>
     <div className="btns-group">
       <div className="wrapp-btn">
