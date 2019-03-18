@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { Button } from 'reactstrap';
 import Filter from './Filter';
+import Controls from '../Controls';
 import { EQUAL_OPERATION, CONTAINING_OPERATION, TYPE } from '../constants';
-
-import addIcon from '../icons/add.svg';
 
 class Filters extends Component {
   static DEFAULT_NUMBER_OPERATION = EQUAL_OPERATION;
@@ -14,7 +12,6 @@ class Filters extends Component {
     super(props);
 
     this.state = {
-      filtersCount: 1,
       filters: [
         {
           type: TYPE.TEXT,
@@ -26,17 +23,17 @@ class Filters extends Component {
     };
   }
 
-  setType = (value, id) => {
+  setType = (type, id) => {
     const { filters } = this.state;
 
     const newFilters = filters.map((item) => {
       if (item.id === +id) {
         return {
           ...item,
-          type: value,
+          type,
           value: '',
           operation:
-            value === TYPE.TEXT
+            type === TYPE.TEXT
               ? Filters.DEFAULT_TEXT_OPERATION
               : Filters.DEFAULT_NUMBER_OPERATION,
         };
@@ -64,13 +61,13 @@ class Filters extends Component {
     this.setState({ filters: newFilters });
   };
 
-  setOperation = (value, id) => {
+  setOperation = (operation, id) => {
     const { filters } = this.state;
     const newFilters = filters.map((item) => {
       if (item.id === +id) {
         return {
           ...item,
-          operation: value,
+          operation,
         };
       }
 
@@ -91,9 +88,8 @@ class Filters extends Component {
   };
 
   addFilter = () => {
-    const { filters, filtersCount } = this.state;
-    if (filtersCount === 10) return;
-    const newFiltersCount = filtersCount + 1;
+    const { filters } = this.state;
+    if (filters.length === 10) return;
     const newFilter = {
       type: TYPE.TEXT,
       operation: Filters.DEFAULT_TEXT_OPERATION,
@@ -103,18 +99,16 @@ class Filters extends Component {
 
     const newFilters = [...filters, newFilter];
 
-    this.setState({ filters: newFilters, filtersCount: newFiltersCount });
+    this.setState({ filters: newFilters });
   };
 
-  clearFilter = () => {
-    const newFiltersCount = 1;
+  clearFilters = () => {
     this.setState({
       filters: [this.getNewFilter()],
-      filtersCount: newFiltersCount,
     });
   };
 
-  getInfo = () => {
+  getData = () => {
     const { filters } = this.state;
 
     const newFilters = filters.reduce(
@@ -138,15 +132,14 @@ class Filters extends Component {
   };
 
   deleteFilter = (id) => {
-    const { filters, filtersCount } = this.state;
-    const newFiltersCount = filtersCount - 1;
+    const { filters } = this.state;
     const newFilterts = filters.filter((item) => item.id !== +id);
 
-    this.setState({ filters: newFilterts, filtersCount: newFiltersCount });
+    this.setState({ filters: newFilterts });
   };
 
   render() {
-    const { filters, filtersCount } = this.state;
+    const { filters } = this.state;
     return (
       <>
         <div className="list">
@@ -157,7 +150,7 @@ class Filters extends Component {
               type={type}
               operation={operation}
               value={newValue}
-              count={filtersCount}
+              count={filters.length}
               onTypeChange={({ target: { value } }) => {
                 this.setType(value, id);
               }}
@@ -171,24 +164,11 @@ class Filters extends Component {
             />
           ))}
         </div>
-        <div className="condition">
-          <img src={addIcon} alt="add" className="condition__add" />
-          <Button color="link" onClick={this.addFilter}>
-            Add condition
-          </Button>
-        </div>
-        <div className="btns-group">
-          <div className="wrapp-btn">
-            <Button color="primary" onClick={this.getInfo}>
-              Apply
-            </Button>
-          </div>
-          <div className="wrapp-btn">
-            <Button outline color="secondary" onClick={this.clearFilter}>
-              Clear Filter
-            </Button>
-          </div>
-        </div>
+        <Controls
+          addFilter={this.addFilter}
+          getData={this.getData}
+          clearFilters={this.clearFilters}
+        />
       </>
     );
   }
