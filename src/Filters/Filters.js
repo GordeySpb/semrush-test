@@ -12,7 +12,7 @@ const Filters = () => {
     updateType,
     updateOperation,
     deleteFilter,
-    getData,
+    getPublickData,
     clearFilters,
   } = useFilters();
 
@@ -42,7 +42,7 @@ const Filters = () => {
       </div>
       <Controls
         addFilter={addNewFilter}
-        getData={getData}
+        getData={getPublickData}
         clearFilters={clearFilters}
       />
     </>

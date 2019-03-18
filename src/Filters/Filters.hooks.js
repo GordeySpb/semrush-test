@@ -20,6 +20,25 @@ const getNewFilter = () => ({
   id: +Date.now(),
 });
 
+const getFiltersByCategory = (filters) => {
+  return filters.reduce(
+    (res, cur) => {
+      const { type, id, ...restData } = cur;
+
+      if (type === TYPE.TEXT) {
+        res.text.push(restData);
+      }
+
+      if (type === TYPE.NUMBER) {
+        res.number.push(restData);
+      }
+
+      return res;
+    },
+    { number: [], text: [] }
+  );
+};
+
 function filterReducer(state, action) {
   switch (action.type) {
     case ADD_FILTER: {
@@ -72,27 +91,6 @@ function filterReducer(state, action) {
 
     case DELETE_FILTER: {
       return state.filter((filter) => filter.id !== +action.payload.id);
-    }
-
-    case GET_DATA: {
-      const filters = state.reduce(
-        (res, cur) => {
-          const { type, id, ...restData } = cur;
-
-          if (type === TYPE.TEXT) {
-            res.text.push(restData);
-          }
-
-          if (type === TYPE.NUMBER) {
-            res.number.push(restData);
-          }
-
-          return res;
-        },
-        { number: [], text: [] }
-      );
-
-      console.log(filters);
     }
 
     case CLEAR_FILTERS: {
@@ -148,6 +146,10 @@ export default function useFilters() {
     });
   };
 
+  const getPublickData = () => {
+    console.log(getFiltersByCategory(filters));
+  };
+
   return {
     addNewFilter,
     filters,
@@ -157,5 +159,6 @@ export default function useFilters() {
     deleteFilter,
     getData,
     clearFilters,
+    getPublickData,
   };
 }
