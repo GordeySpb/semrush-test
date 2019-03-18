@@ -1,6 +1,6 @@
 export const TYPE = {
   TEXT: 'text',
-  NUMBERS: 'numbers',
+  NUMBER: 'number',
 };
 
 export const CONTAINING_OPERATION = 'Containing';
@@ -13,21 +13,17 @@ export const LESS_THAN_OPERATION = 'Less than';
 
 export const OPERATIONS = {
   [TYPE.TEXT]: [
-    ENDS_WHITH_OPERATION,
-    BEGINS_WITH_OPERATION,
-    EXACTLY_MATCHING_OPERATION,
     CONTAINING_OPERATION,
+    EXACTLY_MATCHING_OPERATION,
+    BEGINS_WITH_OPERATION,
+    ENDS_WHITH_OPERATION,
   ],
-  [TYPE.NUMBERS]: [
-    EQUAL_OPERATION,
-    GREATER_THEN_OPERATION,
-    LESS_THAN_OPERATION,
-  ],
+  [TYPE.NUMBER]: [EQUAL_OPERATION, GREATER_THEN_OPERATION, LESS_THAN_OPERATION],
 };
 
 export const TRANSLATIONS = {
   types: {
     [TYPE.TEXT]: 'Text field',
-    [TYPE.NUMBERS]: 'Number field',
+    [TYPE.NUMBER]: 'Number field',
   },
 };

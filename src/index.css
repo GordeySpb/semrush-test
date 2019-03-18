@@ -18,6 +18,23 @@ code {
   margin: 100px auto;
 }
 
+.list {
+  width: 100%;
+  height: 100%;
+}
+
+.list::after {
+  content: '';
+  display: flex;
+  width: 100%;
+  height: 2px;
+  background-color: #aeaeae;
+  bottom: 0;
+  width: 79%;
+  margin-bottom: 20px;
+}
+
+
 .inputs-group {
   width: 100%;
   display: flex;
@@ -30,6 +47,11 @@ code {
   margin-right: 15px;
 }
 
+.form-control--last {
+  margin-right: 20px;
+}
+
+
 .btns-group {
   display: flex;
   justify-content: flex-start;
@@ -39,14 +61,29 @@ code {
   margin-right: 15px;
 }
 
+
+
 .wrapp-input--last {
   display: flex;
   align-items: center;
+  margin-right: 0px;
 }
 
 .condition {
   display: flex;
   margin-bottom: 20px;
+  align-items: center;
+  margin-left: 20px;
+}
+
+.condition:hover {
+  color: #0056b3;
+}
+
+
+.condition__add {
+  width: 10px;
+  height: 10px;
 }
 
 .delete-img {
@@ -55,7 +92,5 @@ code {
   cursor: pointer;
 }
 
-.hidden {
-  display: none;
-}
+
 
